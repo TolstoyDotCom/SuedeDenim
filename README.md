@@ -11,6 +11,7 @@ the whole, processed HTML into a file. In that file, comment out all the Javascr
 attempting to redirect). At the end of the file, put this:
 
 ```javascript
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/starter.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/utils/NumericPhrase.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/utils/Utils.js"></script>
