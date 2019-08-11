@@ -13,10 +13,8 @@
 */
 
 com.tolstoy.basic.app.utils.NumericPhrase = function( text ) {
-	var self = this;
-
 	this.text = text || '';
-	this.components = text.split( /\s+/ );
+	this.components = this.text.split( /\s+/ );
 	this.numbers = [];
 	this.words = [];
 
@@ -39,19 +37,19 @@ com.tolstoy.basic.app.utils.NumericPhrase = function( text ) {
 
 	this.countWords = function() {
 		return this.words.length;
-	}
+	};
 
 	this.countNumbers = function() {
 		return this.numbers.length;
-	}
+	};
 
 	this.getWord = function( which ) {
 		return this.words[ which ];
-	}
+	};
 
 	this.getNumber = function( which ) {
 		return this.numbers[ which ];
-	}
+	};
 
 	this.containsWord = function( word ) {
 		if ( !word || !this.countWords() ) {
@@ -61,11 +59,11 @@ com.tolstoy.basic.app.utils.NumericPhrase = function( text ) {
 		var wordLC = word.toLowerCase();
 
 		for ( var i = 0; i < this.words.length; i++ ) {
-			if ( this.words[ i ].indexOf( word ) > -1 ) {
+			if ( this.words[ i ].indexOf( wordLC ) > -1 ) {
 				return true;
 			}
 		}
 
 		return false;
-	}
-}
+	};
+};

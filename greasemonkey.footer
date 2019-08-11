@@ -12,14 +12,6 @@
  * the License.
 */
 
-com.tolstoy.basic.app.tweet.TweetFactory = function() {
-	this.createTweet = function( params ) {
-		params = params || {};
-
-		if ( !params.author ) {
-			params.author = new com.tolstoy.basic.app.tweet.TweetAuthor( {} );
-		}
-
-		return new com.tolstoy.basic.app.tweet.Tweet( params );
-	};
-};
+$(document).ready(function() {
+	new com.tolstoy.basic.app.main.Main();
+});

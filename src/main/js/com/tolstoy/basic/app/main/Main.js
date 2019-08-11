@@ -13,12 +13,27 @@
 */
 
 com.tolstoy.basic.app.main.Main = function() {
+	var logger = new com.tolstoy.basic.app.utils.TextareaLogger();
 	var utils = com.tolstoy.basic.app.utils.Utils;
 	var tweetFactory = new com.tolstoy.basic.app.tweet.TweetFactory();
 	var functions = com.tolstoy.basic.app.main.StandardTweetParserFunctions.getFunctions();
 	var parseTweets = new com.tolstoy.basic.app.main.ParseTweets( functions, tweetFactory, 'article', utils );
-	var tweets = parseTweets.parse( $('main') );
-	$.each(tweets, function( index, obj ) {
-		console.log( obj.export() );
-	});
-}
+
+	var tweets = {};
+
+	var timeout = setInterval( function() {
+		var foundTweets = parseTweets.parse( $('main') );
+		$.each( foundTweets, function( index, obj ) {
+			var tweetid = obj.get( 'tweetid' );
+			if ( tweetid && !tweets[ tweetid ] ) {
+				tweets[ tweetid ] = obj;
+			}
+		});
+
+		var ary = [];
+		$.each( tweets, function( index, obj ) {
+			ary.push( obj.export() );
+		});
+		logger.log( JSON.stringify( ary, null, "\t" ) );
+	}, 1000 );
+};

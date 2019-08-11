@@ -13,8 +13,6 @@
 */
 
 com.tolstoy.basic.app.tweet.TweetAuthor = function(params) {
-	var self = this;
-
 	params = params || {};
 
 	this.fields = [
@@ -33,11 +31,11 @@ com.tolstoy.basic.app.tweet.TweetAuthor = function(params) {
 
 	this.set = function( which, value ) {
 		this[ which ] = value;
-	}
+	};
 
 	this.get = function( which ) {
 		return this[ which ];
-	}
+	};
 
 	this.export = function() {
 		var ret = {};
@@ -48,5 +46,5 @@ com.tolstoy.basic.app.tweet.TweetAuthor = function(params) {
 		}
 
 		return ret;
-	}
-}
+	};
+};

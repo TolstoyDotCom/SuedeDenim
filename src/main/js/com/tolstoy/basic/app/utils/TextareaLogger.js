@@ -12,14 +12,38 @@
  * the License.
 */
 
-com.tolstoy.basic.app.tweet.TweetFactory = function() {
-	this.createTweet = function( params ) {
-		params = params || {};
+com.tolstoy.basic.app.utils.TextareaLogger = function() {
+	this.init = function() {
+		var textarea = $( '<textarea/>' )
+		.attr({
+			rows: 5,
+			cols: 120,
+			id:'suededenim_output'
+		});
 
-		if ( !params.author ) {
-			params.author = new com.tolstoy.basic.app.tweet.TweetAuthor( {} );
+		var div = $( '<div/>' )
+		.css({
+			width: '100%',
+			height: '5rem',
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			zIndex: 1000
+		})
+		.attr({
+			id: 'suededenim'
+		});
+
+		div.append( textarea );
+
+		$( 'body' ).prepend( div );
+	};
+
+	this.log = function( output ) {
+		if ( !$( '#suededenim_output' ).length ) {
+			this.init();
 		}
 
-		return new com.tolstoy.basic.app.tweet.Tweet( params );
+		$( '#suededenim_output' ).text( '' + output );
 	};
 };

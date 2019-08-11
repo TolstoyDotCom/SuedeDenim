@@ -16,15 +16,15 @@ com.tolstoy.basic.app.main.ParseTweets = function( tweetParsers, tweetFactory, t
 	var self = this;
 
 	this.parse = function( $container ) {
-		var ret = [];
+		var tweets = [];
 
 		$( tweetSelector, $container ).each( function( index ) {
 			var tweet = self.parseTweet( index, $(this) );
-			ret.push( tweet );
+			tweets.push( tweet );
 		});
 
-		return ret;
-	}
+		return tweets;
+	};
 
 	this.parseTweet = function( index, $elem ) {
 		var tweet = tweetFactory.createTweet();
@@ -46,5 +46,6 @@ com.tolstoy.basic.app.main.ParseTweets = function( tweetParsers, tweetFactory, t
 		});
 
 		return tweet;
-	}
-}
+	};
+};
+

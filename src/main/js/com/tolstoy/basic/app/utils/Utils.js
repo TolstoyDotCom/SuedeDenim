@@ -19,21 +19,40 @@ com.tolstoy.basic.app.utils.Utils = {
 		return new com.tolstoy.basic.app.utils.NumericPhrase( input );
 	},
 
+	//	if testid goes away, 'which' won't work for various languages.
+	//	parsing "88651 Μου αρέσει", "88651 отметка «Нравится»" probably
+	//	isn't an option so add "lang=en" to the URL.
 	findInteraction: function( which, testid, numericPhrases ) {
-		var ret = 0;
+		var phrases = [];
+
+		$.each( numericPhrases, function ( index, numericPhrase ) {
+			if ( numericPhrase.countNumbers() ) {
+				phrases.push( numericPhrase );
+			}
+		});
+
+		if ( !phrases.length ) {
+			return false;
+		}
+
+		phrases.sort( function( a, b ) {
+			return b.getNumber( 0 ) - a.getNumber( 0 );
+		});
 
 		if ( testid && testid.indexOf( which ) > -1 ) {
-			$.each( numericPhrases, function ( index, numericPhrase ) {
-				if ( numericPhrase.countNumbers() ) {
-					ret = numericPhrase.getNumber( 0 );
-					return false;
-				}
-			});
+			return phrases.shift().getNumber( 0 );
 		}
 
-		if ( ret ) {
-			return ret;
-		}
+		var ret = null;
+
+		$.each( phrases, function ( index, phrase ) {
+			if ( phrase.containsWord( which ) ) {
+				ret = phrase;
+				return false;
+			}
+		});
+
+		return ret ? ret.getNumber( 0 ) : null;
 	},
 
 	getTextContent: function($container, raw) {
@@ -74,18 +93,18 @@ com.tolstoy.basic.app.utils.Utils = {
 	},
 
 	extractTwitterHandle: function( text ) {
-		if (!text) {
+		if ( !text ) {
 			return null;
 		}
 
 		var ary = text.split( '/' );
-		if (!ary || ary.length < 1) {
+		if ( !ary || ary.length < 1 ) {
 			return null;
 		}
 
-		for (var i = ary.length - 1; i >= 0; i--) {
-			if (ary[i] && ary[i].trim()) {
-				return ary[i].trim();
+		for ( var i = ary.length - 1; i >= 0; i-- ) {
+			if ( ary[ i ] && ary[ i ].trim() ) {
+				return ary[ i ].trim();
 			}
 		}
 

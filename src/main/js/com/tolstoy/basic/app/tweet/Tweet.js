@@ -13,8 +13,6 @@
 */
 
 com.tolstoy.basic.app.tweet.Tweet = function(params) {
-	var self = this;
-
 	params = params || {};
 
 	this.fields = [
@@ -49,12 +47,12 @@ com.tolstoy.basic.app.tweet.Tweet = function(params) {
 	this.is_pinned = params.is_pinned || false;
 
 	this.set = function( which, value ) {
-		self[ which ] = value;
-	}
+		this[ which ] = value;
+	};
 
 	this.get = function( which ) {
-		return self[ which ];
-	}
+		return this[ which ];
+	};
 
 	this.export = function() {
 		var ret = {};
@@ -67,5 +65,5 @@ com.tolstoy.basic.app.tweet.Tweet = function(params) {
 		ret.author = this.get( 'author' ) ? this.get( 'author' ).export() : {};
 
 		return ret;
-	}
-}
+	};
+};

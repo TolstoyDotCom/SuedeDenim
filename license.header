@@ -11,15 +11,3 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
 */
-
-com.tolstoy.basic.app.tweet.TweetFactory = function() {
-	this.createTweet = function( params ) {
-		params = params || {};
-
-		if ( !params.author ) {
-			params.author = new com.tolstoy.basic.app.tweet.TweetAuthor( {} );
-		}
-
-		return new com.tolstoy.basic.app.tweet.Tweet( params );
-	};
-};

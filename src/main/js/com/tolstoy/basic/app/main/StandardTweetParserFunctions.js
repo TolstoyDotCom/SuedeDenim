@@ -27,7 +27,19 @@ com.tolstoy.basic.app.main.StandardTweetParserFunctions = {
 			var role = link.attr( 'role' );
 			var href = link.attr( 'href' );
 			var name = utils.extractTwitterHandle( href );
-			if ( name ) {
+			if ( name && role == 'link' ) {
+				tweet.get( 'author' ).set( 'name', name );
+			}
+		}
+	},
+
+	findHandle2: function( $container, tweet, utils ) {
+		var link = $container.find( 'a' );
+		if ( link.length ) {
+			var role = link.attr( 'role' );
+			var href = link.attr( 'href' );
+			var name = utils.extractTwitterHandle( href );
+			if ( !tweet.get( 'author' ).get( 'name' ) && name && href && href.charAt(0) == '/' && role == 'link' ) {
 				tweet.get( 'author' ).set( 'name', name );
 			}
 		}
@@ -71,7 +83,7 @@ com.tolstoy.basic.app.main.StandardTweetParserFunctions = {
 				var $t = $(this);
 				var $par = $t.parent();
 				var tweetlanguage = $par.attr( 'lang' );
-				var tweettext = utils.getTextContent( $t );
+				var tweettext = utils.getTextContent( $par );
 
 				if ( tweetlanguage && tweettext ) {
 					tweet.set( 'tweetlanguage', tweetlanguage );
@@ -88,8 +100,8 @@ com.tolstoy.basic.app.main.StandardTweetParserFunctions = {
 			var aria = $t.attr( 'aria-label' );
 
 			var numericPhrases = [];
-			numericPhrases.push( utils.makeNumericPhrase( $t.find( 'div div span span' ).text() ) );
 			numericPhrases.push( utils.makeNumericPhrase( aria ) );
+			numericPhrases.push( utils.makeNumericPhrase( $t.find( 'div div span span' ).text() ) );
 			numericPhrases.push( utils.makeNumericPhrase( utils.getTextContent( $t ) ) );
 
 			var favoritecount = utils.findInteraction( 'like', testid, numericPhrases );
@@ -113,6 +125,7 @@ com.tolstoy.basic.app.main.StandardTweetParserFunctions = {
 		return {
 			'findPinnedTweet': this.findPinnedTweet,
 			'findHandle': this.findHandle,
+			'findHandle2': this.findHandle2,
 			'findProfileImage': this.findProfileImage,
 			'findDateLine': this.findDateLine,
 			'findTweetText': this.findTweetText,
@@ -120,3 +133,4 @@ com.tolstoy.basic.app.main.StandardTweetParserFunctions = {
 		};
 	}
 };
+
