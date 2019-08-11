@@ -42,9 +42,6 @@ attempting to redirect). At the end of the file, put this:
 If you load that page in the browser, you should see a list of tweets in the browser console.
 
 
-A Greasemonkey script will be released shortly.
-
-
 Building
 ------
 To build the Greasemonkey version, open a terminal in the root of the project and:
