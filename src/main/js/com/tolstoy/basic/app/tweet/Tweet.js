@@ -16,7 +16,8 @@ com.tolstoy.basic.app.tweet.Tweet = function(params) {
 	params = params || {};
 
 	this.fields = [
-		'index',
+		'iterationnumber',
+		'iterationindex',
 		'tweettext',
 		'tweetlanguage',
 		'tweetid',
@@ -29,9 +30,12 @@ com.tolstoy.basic.app.tweet.Tweet = function(params) {
 		'replycount',
 		'favoritecount',
 		'is_pinned',
+		'previoustweetid',
+		'nexttweetid',
 	];
 
-	this.index = params.index || '';
+	this.iterationnumber = params.iterationnumber || '';
+	this.iterationindex = params.iterationindex || '';
 	this.tweettext = params.tweettext || '';
 	this.tweetlanguage = params.tweetlanguage || '';
 	this.tweetid = params.tweetid || '';
@@ -44,7 +48,8 @@ com.tolstoy.basic.app.tweet.Tweet = function(params) {
 	this.replycount = params.replycount || '0';
 	this.favoritecount = params.favoritecount || '0';
 	this.author = params.author || {};
-	this.is_pinned = params.is_pinned || false;
+	this.previoustweetid = params.previoustweetid || 0;
+	this.nexttweetid = params.nexttweetid || 0;
 
 	this.set = function( which, value ) {
 		this[ which ] = value;

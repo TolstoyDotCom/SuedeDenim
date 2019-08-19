@@ -15,22 +15,26 @@
 com.tolstoy.basic.app.main.ParseTweets = function( tweetParsers, tweetFactory, tweetSelector, utils ) {
 	var self = this;
 
-	this.parse = function( $container ) {
+	this.parse = function( $container, iterationnumber ) {
 		var tweets = [];
 
-		$( tweetSelector, $container ).each( function( index ) {
-			var tweet = self.parseTweet( index, $(this) );
+		$( tweetSelector, $container ).each( function( iterationindex ) {
+			var tweet = self.parseTweet( $(this) );
+
+			tweet.set( 'iterationnumber', iterationnumber );
+			tweet.set( 'iterationindex', iterationindex );
+
 			tweets.push( tweet );
 		});
+
+		tweets = this.assignPreviousNext( tweets );
 
 		return tweets;
 	};
 
-	this.parseTweet = function( index, $elem ) {
+	this.parseTweet = function( $elem ) {
 		var tweet = tweetFactory.createTweet();
 		var functions = tweetParsers;
-
-		tweet.set( 'index', index );
 
 		$elem.children().each( function() {
 			$(this).children().each( function() {
@@ -46,6 +50,30 @@ com.tolstoy.basic.app.main.ParseTweets = function( tweetParsers, tweetFactory, t
 		});
 
 		return tweet;
+	};
+
+	this.assignPreviousNext = function( tweets ) {
+		var len = tweets.length;
+		if ( !len ) {
+			return tweets;
+		}
+
+		for ( var i = 0; i < len; i++ ) {
+			var tweet = tweets[ i ];
+
+			tweet.set( 'previoustweetid', 0 );
+			tweet.set( 'nexttweetid', 0 );
+
+			if ( i > 0 ) {
+				tweet.set( 'previoustweetid', tweets[ i - 1 ].get( 'tweetid' ) );
+			}
+
+			if ( i + 1 < len ) {
+				tweet.set( 'nexttweetid', tweets[ i + 1 ].get( 'tweetid' ) );
+			}
+		}
+
+		return tweets;
 	};
 };
 

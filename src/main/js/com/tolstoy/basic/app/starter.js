@@ -21,6 +21,10 @@
 		window.com.tolstoy = {};
 	}
 
+	if (typeof window.com.tolstoy.external === 'undefined') {
+		window.com.tolstoy.external = {};
+	}
+
 	if (typeof window.com.tolstoy.basic === 'undefined') {
 		window.com.tolstoy.basic = {};
 	}

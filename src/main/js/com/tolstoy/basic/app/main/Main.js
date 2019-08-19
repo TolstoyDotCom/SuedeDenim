@@ -18,22 +18,17 @@ com.tolstoy.basic.app.main.Main = function() {
 	var tweetFactory = new com.tolstoy.basic.app.tweet.TweetFactory();
 	var functions = com.tolstoy.basic.app.main.StandardTweetParserFunctions.getFunctions();
 	var parseTweets = new com.tolstoy.basic.app.main.ParseTweets( functions, tweetFactory, 'article', utils );
+	var tweetCollection = tweetFactory.createTweetCollection( [] );
 
-	var tweets = {};
+	var iterationnumber = 0;
 
 	var timeout = setInterval( function() {
-		var foundTweets = parseTweets.parse( $('main') );
-		$.each( foundTweets, function( index, obj ) {
-			var tweetid = obj.get( 'tweetid' );
-			if ( tweetid && !tweets[ tweetid ] ) {
-				tweets[ tweetid ] = obj;
-			}
-		});
+		var foundTweets = parseTweets.parse( $('main'), iterationnumber );
 
-		var ary = [];
-		$.each( tweets, function( index, obj ) {
-			ary.push( obj.export() );
-		});
-		logger.log( JSON.stringify( ary, null, "\t" ) );
+		tweetCollection.addTweets( foundTweets );
+
+		logger.log( JSON.stringify( tweetCollection.exportAll(), null, "\t" ) );
+
+		iterationnumber++;
 	}, 1000 );
 };

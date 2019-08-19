@@ -22,4 +22,8 @@ com.tolstoy.basic.app.tweet.TweetFactory = function() {
 
 		return new com.tolstoy.basic.app.tweet.Tweet( params );
 	};
+
+	this.createTweetCollection = function( params ) {
+		return new com.tolstoy.basic.app.tweet.TweetCollection( params );
+	}
 };

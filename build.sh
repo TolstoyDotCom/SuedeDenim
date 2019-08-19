@@ -32,6 +32,7 @@ $files = [
 	'src/main/js/com/tolstoy/basic/app/utils/Utils.js',
 	'src/main/js/com/tolstoy/basic/app/tweet/TweetAuthor.js',
 	'src/main/js/com/tolstoy/basic/app/tweet/Tweet.js',
+	'src/main/js/com/tolstoy/basic/app/tweet/TweetCollection.js',
 	'src/main/js/com/tolstoy/basic/app/tweet/TweetFactory.js',
 	'src/main/js/com/tolstoy/basic/app/main/StandardTweetParserFunctions.js',
 	'src/main/js/com/tolstoy/basic/app/main/ParseTweets.js',
