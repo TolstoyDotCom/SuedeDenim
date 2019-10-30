@@ -12,13 +12,22 @@
  * the License.
 */
 // ==UserScript==
-// @name        SuedeDenim
+// @name        Clean up HTML
 // @namespace   https://tolstoy.com/
-// @version     2.0
-// @description Shows tweets retrieved from a user's timeline.
+// @version     1.0
+// @description To make decoding Twitter's divitis easier, remove some of the cruft.
 // @author      Chris Kelly
 // @include     https://twitter.com/*
-// @grant       none
+// @grant       GM_xmlhttpRequest
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
 // @run-at      document-end
 // ==/UserScript==
+
+function CleanUpHTML() {
+	$( '*' ).removeAttr( 'class' );
+	$( 'svg' ).remove();
+}
+
+$(document).ready( function() {
+	window.setInterval( CleanUpHTML, 10000 );
+});

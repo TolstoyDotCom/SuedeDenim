@@ -44,4 +44,36 @@
 	if (typeof window.com.tolstoy.basic.app.utils === 'undefined') {
 		window.com.tolstoy.basic.app.utils = {};
 	}
+
+	if (typeof window.com.tolstoy.basic.app.retriever === 'undefined') {
+		window.com.tolstoy.basic.app.retriever = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.scroller === 'undefined') {
+		window.com.tolstoy.basic.app.scroller = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.jsonparser === 'undefined') {
+		window.com.tolstoy.basic.app.jsonparser = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.tweetparser === 'undefined') {
+		window.com.tolstoy.basic.app.tweetparser = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.tweetparser.html === 'undefined') {
+		window.com.tolstoy.basic.app.tweetparser.html = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.tweetparser.json === 'undefined') {
+		window.com.tolstoy.basic.app.tweetparser.json = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.tweetparser.html.helper === 'undefined') {
+		window.com.tolstoy.basic.app.tweetparser.html.helper = {};
+	}
+
+	if (typeof window.com.tolstoy.basic.app.tweetparser.json.helper === 'undefined') {
+		window.com.tolstoy.basic.app.tweetparser.json.helper = {};
+	}
 })();

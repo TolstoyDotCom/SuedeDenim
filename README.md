@@ -22,19 +22,79 @@ attempting to redirect). At the end of the file, put this:
 ```javascript
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/starter.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/utils/DebugLevel.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/utils/ConsoleLogger.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/utils/TextareaLogger.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/utils/NumericPhrase.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/utils/Utils.js"></script>
-<script src="src/main/js/com/tolstoy/basic/app/tweet/TweetAuthor.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweet/TweetSupposedQuality.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweet/TweetLink.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweet/TweetUser.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/tweet/Tweet.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweet/TweetCollection.js"></script>
 <script src="src/main/js/com/tolstoy/basic/app/tweet/TweetFactory.js"></script>
-<script src="src/main/js/com/tolstoy/basic/app/main/StandardTweetParserFunctions.js"></script>
-<script src="src/main/js/com/tolstoy/basic/app/main/ParseTweets.js"></script>
-<script src="src/main/js/com/tolstoy/basic/app/main/Main.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/scroller/ScrollerStatus.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/scroller/IntervalScroller.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/scroller/StepScroller.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/scroller/ScrollerFactory.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Debug.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/AuthorAvatar.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/AuthorNames.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Date1.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Date2.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Tweetid1.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Tweetid2.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Tweettext1.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Interaction1.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Interaction2.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Permalink1.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Permalink2.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/helper/Photo1.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/html/ParsedTweetFactory.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/json/helper/InstructionAddEntriesHelper.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/json/helper/InstructionTerminateTimelineHelper.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/json/helper/TweetHelper.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/json/helper/UserHelper.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/tweetparser/json/ParsedJSONFactory.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateStatus.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateCheckLoggedIn.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateWaitForTweetSelector.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateFindUncensoredTweets.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateClickShowHiddenReplies.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateFindCensoredTweets.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateClickShowHiddenReplies2.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/StateFindCensoredTweets2.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/TimelineRunner.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/ReplyPageRunner.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/retriever/Starter.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/jsonparser/InterchangeHelper.js"></script>
+<script src="src/main/js/com/tolstoy/basic/app/jsonparser/Starter.js"></script>
 
 <script>
 	$(document).ready(function() {
-		new com.tolstoy.basic.app.main.Main();
+		var jsParams = {
+			url: 'url',
+			pageType: 'timeline',
+			debugLevel: 2,
+
+			mainClockDelay: '1500',
+
+			tweetSelector: 'main article',
+
+			scrollerNumTimesToScroll: '100',
+			scrollerHeightMultiplier: '0.25',
+
+			checkLoggedInDelay: '5',
+
+			maxWaitForTweetSelector: '30',
+
+			hiddenRepliesAfterClickIterations: '2',
+			hiddenRepliesAttemptIterations: '10'
+		};
+
+		new com.tolstoy.basic.app.retriever.Starter( jsParams, function( data ) {
+			console.log( data );
+		});
 	});
 </script>
 ```

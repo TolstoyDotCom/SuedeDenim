@@ -12,42 +12,26 @@
  * the License.
 */
 
-com.tolstoy.basic.app.utils.TextareaLogger = function( $, debugLevel ) {
+com.tolstoy.basic.app.utils.ConsoleLogger = function( $, debugLevel ) {
+	var newlineRegex = /\r?\n/;
+
 	this.getDebugLevel = function() {
 		return debugLevel;
 	};
 
 	this.init = function() {
-		var textarea = $( '<textarea/>' )
-		.attr({
-			rows: 5,
-			cols: 120,
-			id:'suededenim_output'
-		});
-
-		var div = $( '<div/>' )
-		.css({
-			width: '100%',
-			height: '5rem',
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			zIndex: 1000
-		})
-		.attr({
-			id: 'suededenim'
-		});
-
-		div.append( textarea );
-
-		$( 'body' ).prepend( div );
 	};
 
 	this.info = function( output ) {
-		if ( !$( '#suededenim_output' ).length ) {
-			this.init();
+		if ( !output ) {
+			return;
 		}
 
-		$( '#suededenim_output' ).text( '' + output );
+		if ( window.console && window.console.info ) {
+			var ary = output.split( newlineRegex );
+			for ( var i = 0; i < ary.length; i++ ) {
+				console.info( ary[ i ] );
+			}
+		}
 	};
 };

@@ -12,7 +12,7 @@
  * the License.
 */
 
-com.tolstoy.basic.app.tweet.TweetCollection = function( params ) {
+com.tolstoy.basic.app.tweet.TweetCollection = function( $, input, utils, logger ) {
 	this.tweets = [];
 
 	this.addTweets = function( ary ) {
@@ -37,25 +37,28 @@ com.tolstoy.basic.app.tweet.TweetCollection = function( params ) {
 		return ary;
 	};
 
+	/**
+	 * @return 0 if not added, 1 if appended, 2 if replaced.
+	 */
 	this.addTweet = function( newTweet ) {
-		if ( !newTweet || !newTweet.get( 'tweetid' ) ) {
-			return false;
+		if ( !newTweet || !newTweet.getAttribute( 'tweetid' ) ) {
+			return 0;
 		}
 
-		var existing = this.findTweetByID( newTweet.get( 'tweetid' ) );
+		var existing = this.findTweetByID( newTweet.getAttribute( 'tweetid' ) );
 		if ( !existing ) {
 			this.tweets.push( newTweet );
 
-			return true;
+			return 1;
 		}
 
-		var previoustweetid = existing.get( 'previoustweetid' ) || newTweet.get( 'previoustweetid' );
-		var nexttweetid = existing.get( 'nexttweetid' ) || newTweet.get( 'nexttweetid' );
+		var previoustweetid = existing.getAttribute( 'previoustweetid' ) || newTweet.getAttribute( 'previoustweetid' );
+		var nexttweetid = existing.getAttribute( 'nexttweetid' ) || newTweet.getAttribute( 'nexttweetid' );
 
-		existing.set( 'previoustweetid', previoustweetid );
-		existing.set( 'nexttweetid', nexttweetid );
+		existing.setAttribute( 'previoustweetid', previoustweetid );
+		existing.setAttribute( 'nexttweetid', nexttweetid );
 
-		return true;
+		return 2;
 	};
 
 	this.findTweetByID = function( id ) {
@@ -64,11 +67,25 @@ com.tolstoy.basic.app.tweet.TweetCollection = function( params ) {
 		}
 
 		for ( var i = 0; i < this.tweets.length; i++ ) {
-			if ( this.tweets[ i ].get( 'tweetid' ) == id ) {
+			if ( this.tweets[ i ].getAttribute( 'tweetid' ) == id ) {
 				return this.tweets[ i ];
 			}
 		}
 
 		return null;
+	};
+
+	this.toDebugString = function( indent ) {
+		if ( !this.tweets || !this.tweets.length ) {
+			return 'no items';
+		}
+
+		var ary = [];
+
+		for ( var i = 0; i < this.tweets.length; i++ ) {
+			ary.push( indent + '  ' + this.tweets[ i ].toDebugString( '' ) );
+		}
+
+		return indent + ary.join( "\n" );
 	};
 };

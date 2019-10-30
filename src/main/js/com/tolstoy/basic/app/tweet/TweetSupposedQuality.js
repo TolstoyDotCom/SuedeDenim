@@ -11,14 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
 */
-// ==UserScript==
-// @name        SuedeDenim
-// @namespace   https://tolstoy.com/
-// @version     2.0
-// @description Shows tweets retrieved from a user's timeline.
-// @author      Chris Kelly
-// @include     https://twitter.com/*
-// @grant       none
-// @require     http://code.jquery.com/jquery-2.1.4.min.js
-// @run-at      document-end
-// ==/UserScript==
+
+com.tolstoy.basic.app.tweet.TweetSupposedQuality = {
+	HIGH: 'high_quality',
+	LOW: 'low_quality',
+	ABUSIVE: 'abusive_quality',
+	UNKNOWN: 'unknown_quality'
+};

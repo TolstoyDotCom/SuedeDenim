@@ -12,18 +12,33 @@
  * the License.
 */
 
-com.tolstoy.basic.app.tweet.TweetFactory = function() {
-	this.createTweet = function( params ) {
-		params = params || {};
+com.tolstoy.basic.app.tweet.TweetFactory = function( $, utils, logger ) {
+	this.makeUser = function( input ) {
+		input = input || {};
 
-		if ( !params.author ) {
-			params.author = new com.tolstoy.basic.app.tweet.TweetAuthor( {} );
-		}
-
-		return new com.tolstoy.basic.app.tweet.Tweet( params );
+		return new com.tolstoy.basic.app.tweet.TweetUser( $, input, utils, logger );
 	};
 
-	this.createTweetCollection = function( params ) {
-		return new com.tolstoy.basic.app.tweet.TweetCollection( params );
-	}
+	this.makeTweet = function( input ) {
+		input = input || {};
+
+		if ( !input.user ) {
+			input.user = this.makeUser();
+		}
+
+		return new com.tolstoy.basic.app.tweet.Tweet( $, input, utils, logger );
+	};
+
+	this.makeTweetCollection = function( input ) {
+		return new com.tolstoy.basic.app.tweet.TweetCollection( $, input, utils, logger );
+	};
+
+	this.makeTweetLink = function( input ) {
+		var link = new com.tolstoy.basic.app.tweet.TweetLink( $, input, utils, logger );
+		if ( !link.isValid() && logger.getDebugLevel().isDebug() ) {
+			logger.info( 'TweetFactory::makeTweetLink error: ' + link.getError() );
+		}
+
+		return link;
+	};
 };

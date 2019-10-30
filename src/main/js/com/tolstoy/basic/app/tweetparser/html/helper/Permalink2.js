@@ -12,28 +12,26 @@
  * the License.
 */
 
-$(document).ready(function() {
-	var jsParams = {
-		url: 'url',
-		pageType: 'timeline',
-		debugLevel: 2,
+com.tolstoy.basic.app.tweetparser.html.helper.Permalink2 = function( $, $elem, tweetFactory, utils, logger ) {
+	var valid = false, permalink = '';
 
-		mainClockDelay: '1500',
-
-		tweetSelector: 'main article',
-
-		scrollerNumTimesToScroll: '100',
-		scrollerHeightMultiplier: '0.25',
-
-		checkLoggedInDelay: '5',
-
-		maxWaitForTweetSelector: '30',
-
-		hiddenRepliesAfterClickIterations: '2',
-		hiddenRepliesAttemptIterations: '10'
+	this.isValid = function() {
+		return valid;
 	};
 
-	new com.tolstoy.basic.app.retriever.Starter( jsParams, function( data ) {
-		console.log( 'retriever.Starter final data=', data );
+	this.getPermalink = function() {
+		return permalink;
+	};
+
+	$( 'div > div > a[role="link"]', $elem ).each( function() {
+		var $t = $(this);
+		var link = tweetFactory.makeTweetLink( { source: $t.attr( 'href' ) } );
+
+		if ( link.isStatusLink() || link.isRetweetLink() || link.isLikeLink() || link.isReplyLink() ) {
+			permalink = link.getStatusLink();
+			return false;
+		}
 	});
-});
+
+	valid = !!permalink;
+};
