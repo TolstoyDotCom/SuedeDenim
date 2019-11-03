@@ -94,10 +94,12 @@ com.tolstoy.basic.app.tweetparser.json.helper.TweetHelper = function( $, tweetFa
 			sourceKey: 'time',
 			defaultValue: '0',
 			importer: function( target, source ) {
-				target[ 'time' ] = source.created_at ? Date.parse( source.created_at ) : '0';
+				target[ 'time' ] = source.created_at ? Date.parse( source.created_at ) : 0;
 				if ( isNaN( target[ 'time' ] ) ) {
 					target[ 'time' ] = 0;
 				}
+
+				target[ 'time' ] /= 1000;	//	'time' is in seconds since Unix epoch
 			}
 		},
 		{

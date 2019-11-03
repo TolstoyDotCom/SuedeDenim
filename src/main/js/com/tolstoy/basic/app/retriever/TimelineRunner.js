@@ -16,6 +16,7 @@ com.tolstoy.basic.app.retriever.TimelineRunner = function( $, jsParams, tweetCol
 	var moi = this;
 
 	var stateObj = new com.tolstoy.basic.app.retriever.StateCheckLoggedIn( $, scroller, jsParams.checkLoggedInDelay, utils, logger );
+	var scrollerStasuses = com.tolstoy.basic.app.scroller.ScrollerStatus;
 	var iterationnumber = 0;
 	var timer;
 
@@ -26,6 +27,7 @@ com.tolstoy.basic.app.retriever.TimelineRunner = function( $, jsParams, tweetCol
 		tweet_selector: '',
 		show_hidden_replies: '',
 		show_hidden_replies2: '',
+		completed: false,
 		error_code: '',
 		error_message: ''
 	};
@@ -52,6 +54,7 @@ com.tolstoy.basic.app.retriever.TimelineRunner = function( $, jsParams, tweetCol
 		if ( ++iterationnumber > 1000 ) {
 			metadata.error_code = 'TimelineRunner_too_many_iterations';
 			metadata.error_message = 'TimelineRunner: too many iterations';
+			metadata.completed = false;
 			moi.finished();
 			return;
 		}
@@ -76,6 +79,7 @@ com.tolstoy.basic.app.retriever.TimelineRunner = function( $, jsParams, tweetCol
 			case 'StateCheckLoggedIn.failure':
 			case 'StateWaitForTweetSelector.failure':
 			case 'StateFindUncensoredTweets.failure':
+				metadata.completed = false;
 				$.extend( metadata, stateObj.getFailureInformation() );
 				moi.finished();
 				break;
@@ -89,10 +93,12 @@ com.tolstoy.basic.app.retriever.TimelineRunner = function( $, jsParams, tweetCol
 				break;
 
 			case 'StateFindUncensoredTweets.finished':
+				metadata.completed = scroller.getStatus() == scrollerStasuses.FINISHED;
 				moi.finished();
 				break;
 
 			case 'StateWaitForTweetSelector.notfound':
+				metadata.completed = false;
 				metadata.tweet_selector = 'not found';
 				moi.finished();
 				break;
@@ -105,6 +111,7 @@ com.tolstoy.basic.app.retriever.TimelineRunner = function( $, jsParams, tweetCol
 	};
 
 	this.start = function() {
+		metadata.completed = true;
 		timer = window.setInterval( this.iteration, jsParams.mainClockDelay );
 	};
 };
